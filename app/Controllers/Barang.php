@@ -23,7 +23,7 @@ class Barang extends BaseController
             'title' => 'Data Barang',
             'barang'  => $barang->paginate(25, 'barang'),
             'pager' => $this->barangModel->pager,
-            'act'   => 'barang',
+            'act'   => 'item',
             'currentPage' => $currentpage,
             'keyword' => $keyword,
         ];

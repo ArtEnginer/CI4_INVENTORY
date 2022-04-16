@@ -32,7 +32,7 @@ class Keluar extends BaseController
             'title' => 'Data Barang Keluar',
             'keluar'  => $keluar->paginate(25, 'export'),
             'pager' => $this->keluarModel->pager,
-            'act'   => 'barang',
+            'act'   => 'export',
             'currentPage' => $currentpage,
             'keyword' => $keyword,
         ];

@@ -28,13 +28,14 @@ class Laporan extends BaseController
         $this->suplaiModel = new SuplaiModel();
         $this->suplaiDetailModel = new SuplaiDetailModel();
         $this->webModel = new WebModel();
+        $this->actreport = 'report';
     }
 
     public function index()
     {
         $data = [
             'title' => 'Laporan',
-            'act'   => 'laporan',
+            'act'   => $this->actreport,
         ];
         return view('admin/laporan/index', $data);
     }
@@ -47,7 +48,7 @@ class Laporan extends BaseController
             'title' => 'Laporan Barang Keluar',
             'keluar'  => $keluar->paginate(25, 'export'),
             'pager' => $this->keluarModel->pager,
-            'act'   => 'barang',
+            'act'   => $this->actreport,
             'currentPage' => $currentpage,
             'keyword' => $keyword,
         ];
@@ -64,7 +65,7 @@ class Laporan extends BaseController
             'title' => 'Data Barang Masuk',
             'suplai'  => $suplai->paginate(25, 'supply'),
             'pager' => $this->suplaiModel->pager,
-            'act'   => 'barang',
+            'act'   => $this->actreport,
             'currentPage' => $currentpage,
             'keyword' => $keyword,
         ];
@@ -109,7 +110,7 @@ class Laporan extends BaseController
             'title' => 'Laporan Data Barang Keluar',
             'keluar'  => $keluar->paginate($count, 'export'),
             'pager' => $this->keluarModel->pager,
-            'act'   => 'barang',
+            'act'   => $this->actreport,
             'currentPage' => $currentpage,
             'keyword' => $keyword,
             'tanggal_awal' => $tanggal_awal,
@@ -142,7 +143,7 @@ class Laporan extends BaseController
             'title' => 'Laporan Data Barang masuk',
             'masuk'  => $masuk->paginate($count, 'export'),
             'pager' => $this->suplaiModel->pager,
-            'act'   => 'barang',
+            'act'   => $this->actreport,
             'currentPage' => $currentpage,
             'keyword' => $keyword,
             'tanggal_awal' => $tanggal_awal,

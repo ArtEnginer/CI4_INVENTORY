@@ -11,6 +11,7 @@ class Users extends BaseController
     public function __construct()
     {
         $this->usersModel = new UsersModel();
+        $this->actadministrator = 'administrator';
     }
 
     public function index()
@@ -22,7 +23,7 @@ class Users extends BaseController
             'title' => 'Data Admin',
             'admin'  => $admin->paginate(10, 'admin'),
             'pager' => $this->usersModel->pager,
-            'act'   => 'admin',
+            'act'   => $this->actadministrator,
             'currentPage' => $currentpage,
             'keyword' => $keyword,
         ];
@@ -46,7 +47,7 @@ class Users extends BaseController
             'title' => 'Data Admin',
             'admin'  => $admin->paginate(10, 'admin'),
             'pager' => $this->usersModel->pager,
-            'act'   => 'admin',
+            'act'   => $this->actadministrator,
             'currentPage' => $currentpage,
             'keyword' => $keyword,
         ];
@@ -65,7 +66,7 @@ class Users extends BaseController
         $data = [
             'title' => 'Detail Admin',
             'admin' => $admin,
-            'act'   => 'admin',
+            'act'   => $this->actadministrator,
         ];
         return view('admin/users/detail', $data);
     }
@@ -74,7 +75,7 @@ class Users extends BaseController
     {
         $data = [
             'title' => 'Tambah Admin',
-            'act'   => 'admin',
+            'act'   => $this->actadministrator,
             'validation' => \Config\Services::validation()
         ];
         return view('admin/users/add', $data);
@@ -155,7 +156,7 @@ class Users extends BaseController
         $data = [
             'title' => 'Edit Admin',
             'admin'  => $admin,
-            'act'   => 'admin',
+            'act'   => $this->actadministrator,
             'validation' => \Config\Services::validation()
         ];
         return view('admin/users/edit', $data);
@@ -227,7 +228,7 @@ class Users extends BaseController
         $data = [
             'title' => 'Profile',
             'user' => $user,
-            'act' => ''
+            'act' => $this->actadministrator,
         ];
         return view('admin/users/profil/index', $data);
        
@@ -241,7 +242,7 @@ class Users extends BaseController
         $data = [
             'title' => 'Profile',
             'user' => $user,
-            'act' => '',
+            'act' => $this->actadministrator,
             'validation' => \Config\Services::validation()
         ];
         return view('admin/users/profil/password', $data);

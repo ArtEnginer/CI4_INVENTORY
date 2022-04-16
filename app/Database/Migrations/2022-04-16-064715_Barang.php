@@ -12,7 +12,7 @@ class Barang extends Migration
         $this->forge->addField([
             'id_barang' => [
                 'type' => 'Varchar',
-                'constraint' => 11,
+                'constraint' => 12,
                 'auto_increment' => false,
                 'null' => true,
             ],

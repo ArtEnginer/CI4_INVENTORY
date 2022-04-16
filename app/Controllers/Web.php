@@ -11,6 +11,7 @@ class Web extends BaseController
     public function __construct()
     {
         $this->webModel = new WebModel();
+        $this->actsettings= 'settings';
     }
 
     public function index()
@@ -21,7 +22,7 @@ class Web extends BaseController
         $data = [
             'title' => 'Pengaturan',
             'web' => $web,
-            'act'   => 'settings',
+            'act'   => $this->actsettings,
         ];
         return view('admin/web/index', $data);
     }
@@ -54,7 +55,7 @@ class Web extends BaseController
         $data = [
             'title' => 'Pengaturan',
             'web' => $web,
-            'act'   => 'settings',
+            'act'   => $this->actsettings,
             'validation' => \Config\Services::validation()
         ];
         return view('admin/web/edit', $data);

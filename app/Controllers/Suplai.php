@@ -32,7 +32,7 @@ class Suplai extends BaseController
             'title' => 'Data Barang Masuk',
             'suplai'  => $suplai->paginate(25, 'supply'),
             'pager' => $this->suplaiModel->pager,
-            'act'   => 'barang',
+            'act'   => 'supply',
             'currentPage' => $currentpage,
             'keyword' => $keyword,
         ];
