@@ -1,0 +1,242 @@
+@mixin placeholder {
+    &::-webkit-input-placeholder {
+        @content
+    }
+
+    &:-moz-placeholder {
+        @content
+    }
+
+    &::-moz-placeholder {
+        @content
+    }
+
+    &:-ms-input-placeholder {
+        @content
+    }
+}
+
+$background-color: #31409f;
+$card-color: #c70953;
+$card-text-color: #fff;
+$font-family: sans,
+sans-serif;
+$slow-speed: .6s;
+$speed: .3s;
+$fast-speed: .15s;
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: arial, sans-serif;
+}
+
+body {
+    background-color: $background-color;
+    background-image: linear-gradient(to right,
+            $background-color,
+            lighten($background-color, 17.5%));
+}
+
+.disclamer {
+    color: #fff;
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding-top: 20px;
+}
+
+.perspective-container {
+    perspective: 1000px;
+    transform: translateZ(0);
+    padding: 50px 0;
+}
+
+.login-card {
+    cursor: default;
+    position: relative;
+    width: 320px;
+    height: 560px;
+    margin: 0 auto;
+    font-family: $font-family;
+    color: $card-text-color;
+    background-color: $card-color;
+    background:
+        radial-gradient(circle at left,
+            rgba(lighten($card-color, 50%), .3) 35%,
+            rgba(lighten($card-color, 50%), .2) 35%,
+            rgba(lighten($card-color, 50%), .2) 50%,
+            rgba(lighten($card-color, 45%), .1) 50%,
+            rgba(lighten($card-color, 50%), .1) 65%,
+            transparent 65%,
+            transparent) -120px 50% / 120% no-repeat,
+        linear-gradient(to top,
+            $card-color,
+            lighten($card-color, 27.5%));
+    transition: transform $slow-speed ease;
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+
+    &_turned {
+        transform: rotateY(180deg);
+    }
+}
+
+.login-form {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+
+    &_sing-in {
+        z-index: 2;
+        transform: rotateY(0deg);
+    }
+
+    &_sing-up {
+        transform: rotateY(180deg);
+    }
+
+    &__header {
+        text-align: center;
+        padding: 50px 40px 45px;
+    }
+
+    &__inputs-container {
+        padding: 0 40px;
+    }
+
+    &__input {
+        width: 100%;
+        padding: 8px 0;
+        background-color: transparent;
+        border: none;
+        color: $card-text-color;
+        border-bottom: 1px solid currentColor;
+        font-size: 1em;
+
+        @include placeholder {
+            color: rgba($card-text-color, .7);
+            font-size: .7em;
+            transition: font $fast-speed;
+        }
+
+        &:focus {
+            outline: none;
+
+            @include placeholder {
+                font-size: 1em;
+            }
+        }
+
+        &:not(:first-child) {
+            margin-top: 25px;
+        }
+
+        &:nth-last-of-type(1) {
+            margin-bottom: 10px;
+        }
+    }
+
+    &__forgot-password {
+        font-size: .7em;
+        color: $card-text-color;
+        text-decoration: none;
+        font-weight: bold;
+        letter-spacing: -1px;
+        line-height: 2.2em;
+        float: right;
+
+        &:hover,
+        &:focus {
+            text-decoration: underline;
+            outline: none;
+        }
+    }
+
+    &__footer {
+        padding: 50px 70px 0;
+        font-size: .75em;
+    }
+
+    &__submit {
+        width: 100%;
+        border: 1px solid $card-text-color;
+        padding: 10px;
+        margin-bottom: 10px;
+        color: $card-text-color;
+        background-color: transparent;
+        text-transform: uppercase;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: background $speed, color $speed;
+
+        &:hover,
+        &:focus {
+            outline: none;
+            background-color: $card-text-color;
+            color: $card-color;
+        }
+    }
+
+    &__toggle {
+        color: $card-text-color;
+        text-decoration: none;
+        float: right;
+        font-weight: bold;
+        letter-spacing: -1px;
+
+        &:hover,
+        &:focus {
+            text-decoration: underline;
+            outline: none;
+        }
+    }
+}
+
+.checkbox {
+    display: inline-block;
+    color: inherit;
+
+    &:focus {
+        outline: none;
+    }
+
+    &__input {
+        display: none;
+    }
+
+    &__box {
+        color: transparent;
+        display: inline-block;
+        background-color: #fff;
+        line-height: 12px;
+        font-size: 12px;
+        padding: 0 1px;
+
+    }
+
+    &__title {
+        font-size: .7em;
+        cursor: pointer;
+        font-weight: bold;
+        letter-spacing: -1px;
+    }
+
+    &__input:checked+&__box {
+        color: $card-color;
+    }
+
+    &:focus &__title {
+        text-decoration: underline;
+    }
+}
