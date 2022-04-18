@@ -21,8 +21,8 @@ class Web extends Seeder
             'updated_at' => null,
         ];
 
-        // Simple Queries
-        $this->db->query("INSERT INTO web (id_web,nm_web,alamat,email,telp,min_stok,logo,created_at,updated_at) VALUES(:id_web:, :nm_web:, :alamat:, :email:, :telp:, :min_stok:,:logo:, :created_at:, :updated_at:)", $data);
+        // // Simple Queries
+        // $this->db->query("INSERT INTO web (id_web,nm_web,alamat,email,telp,min_stok,logo,created_at,updated_at) VALUES(:id_web:, :nm_web:, :alamat:, :email:, :telp:, :min_stok:,:logo:, :created_at:, :updated_at:)", $data);
 
         // Using Query Builder
         $this->db->table('web')->insert($data);

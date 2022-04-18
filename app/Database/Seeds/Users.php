@@ -22,8 +22,8 @@ class Users extends Seeder
             'updated_at' => null,
         ];
 
-        // Simple Queries
-        $this->db->query("INSERT INTO users (id_user,nm_user,username,password,level,status,created_at,updated_at) VALUES(:id_user:, :nm_user:, :username:, :password:, :level:, :status:, :created_at:, :updated_at:)", $data);
+        // // Simple Queries
+        // $this->db->query("INSERT INTO users (id_user,nm_user,username,password,level,status,created_at,updated_at) VALUES(:id_user:, :nm_user:, :username:, :password:, :level:, :status:, :created_at:, :updated_at:)", $data);
 
         // Using Query Builder
         $this->db->table('users')->insert($data);

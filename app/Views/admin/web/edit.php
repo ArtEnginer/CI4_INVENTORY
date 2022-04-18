@@ -70,7 +70,7 @@
                             </div>
                         </div>
 
-                        <div class="float-right">
+                        <div class="float-right mt-2">
                             <button type="submit" class="btn btn-primary">Edit</button>
                         </div>
                 </form>

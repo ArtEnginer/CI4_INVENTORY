@@ -1,11 +1,12 @@
   <?php
   $db = \Config\Database::connect();
-  $builder = $db->table('vhistorymasuk');
-  $builder1 = $db->table('vhistorykeluar');
-  $querymasuk = $builder->get();
-  $querykeluar = $builder1->get();
-  $historymasuk = $querymasuk->getResultArray();
-  $historykeluar = $querykeluar->getResultArray();
+  $builder = $db->table('vhistory');
+  // $query = $builder->orderBy('created_at', 'asc')->get();
+
+  $query = $builder->orderBy('created_at', 'desc')->limit(7)->get();
+
+  $history = $query->getResultArray();
+
   ?>
 
   <nav class="navbar navbar-main navbar-expand-lg px-0 mx-3 shadow-bottom border-radius-xl bg-white" id="navbarBlur" navbar-scroll="true">
@@ -49,11 +50,17 @@
               <i class="fa fa-bell cursor-pointer"></i>
             </a>
             <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
-              <!-- check if data not null in table the show -->
-              
+
+
+
               <?php
-              foreach ($historymasuk as $data) : {
+              foreach ($history as $data) : {
+
+
               ?>
+
+
+
                   <li class="mb-2">
                     <a class="dropdown-item border-radius-md" href="javascript:;">
                       <div class="d-flex py-1">
@@ -61,8 +68,20 @@
                         <div class="d-flex flex-column justify-content-center">
                           <h6 class="text-sm font-weight-normal mb-1">
                             <span class="font-weight-bold">
+                              <b> <i><?= $data['jumlah'] ?></i></b>
                               <?= $data['nm_barang'] ?>
-                            </span> <i class="text-success">Masuk</i>
+                              <?php
+                              //  if last char is = 'm' echo masuk else keluar
+                              if (substr($data['id'], 0, 2) == 'BM') {
+                                echo ' </span> <i class="text-success">Masuk</i> ';
+                              } elseif (substr($data['id'], 0, 2) == 'BK') {
+                                echo ' </span> <i class="text-danger">Keluar</i> ';
+                              }
+
+
+                              ?>
+
+                              <!-- </span> <i class="text-success">Masuk</i>  -->
                           </h6>
                           <p class="text-xs text-secondary mb-0 ">
                             <i class="fa fa-clock me-1 text-primary"></i>
@@ -73,34 +92,8 @@
                       </div>
                     </a>
                   </li>
-                <?php
-                }
-              endforeach;
-
-              foreach ($historykeluar as $data1) : {
-                ?>
-                  <li class="mb-2">
-                    <a class="dropdown-item border-radius-md" href="javascript:;">
-                      <div class="d-flex py-1">
-
-                        <div class="d-flex flex-column justify-content-center">
-                          <h6 class="text-sm font-weight-normal mb-1">
-                            <span class="font-weight-bold">
-                              <?= $data1['nm_barang'] ?>
-                            </span> <i class="text-primary">Keluar</i>
-                          </h6>
-                          <p class="text-xs text-secondary mb-0 ">
-                            <i class="fa fa-clock me-1 text-primary"></i>
-                            <?= $data1['created_at'] ?>
-
-                          </p>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
               <?php
                 }
-
               endforeach;
 
               ?>

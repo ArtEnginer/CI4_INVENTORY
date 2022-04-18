@@ -24,7 +24,7 @@
                             <td style="width: 70px;">No.</td>
                             <td style="width: 100px;">ID</td>
                             <td>Nama Barang</td>
-                            <td style="width: 200px;">Total Masuk</td>
+                            <td style="width: 200px;">Stok</td>
                             <td style="width: 80px;">Action</td>
                         </tr>
                     </thead>
