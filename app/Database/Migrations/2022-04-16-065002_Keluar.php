@@ -12,7 +12,7 @@ class Keluar extends Migration
         $this->forge->addField([
             'id_keluar' => [
                 'type' => 'Varchar',
-                'constraint' => 11,
+                'constraint' => 12,
                 'auto_increment' => false,
                 'null' => true,
             ],
