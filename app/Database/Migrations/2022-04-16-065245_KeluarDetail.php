@@ -13,16 +13,14 @@ class KeluarDetail extends Migration
 
             'id_keluar' => [
                 'type' => 'Varchar',
-                'constraint' => 11,
-                'auto_increment' => false,
-                'null' => true,
+                'constraint' => 12,
+                'null' => false,
             ],
 
             'id_barang' => [
                 'type' => 'Varchar',
                 'constraint' => 11,
-                'auto_increment' => false,
-                'null' => true,
+                'null' => false,
             ],
 
             'jumlah' => [
@@ -38,15 +36,20 @@ class KeluarDetail extends Migration
             ],
 
         ]);
+        // Create an index on column 
+        // alter index using bitree
+        // choice INDEX
+        $this->forge->addKey('id_keluar');
+        $this->forge->addKey('id_barang');
 
-        $this->forge->addKey('id_keluar', true);
-        $this->forge->addKey('id_barang', true);
         $this->forge->createTable('keluar_detail');
     }
 
     public function down()
     {
-        //
+
+
+
         $this->forge->dropTable('keluar_detail');
     }
 }

@@ -5,7 +5,7 @@
 <?= $this->include('admin/layout/notifikasi') ?>
 
 <?= $this->include('admin/dashboard/stok') ?>
-<div class="row mt-4">
+<div class="row mt-3">
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">

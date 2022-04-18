@@ -15,4 +15,9 @@ class SuplaiDetailModel extends Model
             ->where('suplai_detail.id_suplai', $idSuplai)
             ->get()->getResultArray();
     }
+
+    public function sum_jumlah(){
+        return $this->select('SUM(jumlah) as jumlah')
+            ->get()->getRowArray();
+    }
 }

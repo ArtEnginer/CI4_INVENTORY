@@ -36,4 +36,6 @@ class SuplaiModel extends Model
         return $this->like('id_suplai', $keyword)->orLike('penyuplai', $keyword)->orLike('tanggal', $keyword)
             ->orderBy('tanggal', 'DESC');
     }
+
+    
 }

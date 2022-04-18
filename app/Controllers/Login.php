@@ -30,6 +30,8 @@ class Login extends BaseController
                     session()->set('username', $cek['username']);
                     session()->set('name', $cek['nm_user']);
                     session()->set('level', $cek['level']);
+                    session()->set('status', $cek['status']);
+                    
                     session()->set('loggedIn', true);
 
                     session()->setflashdata('success', 'Selamat Datang, ' . session()->get('name'));
@@ -54,6 +56,7 @@ class Login extends BaseController
         session()->remove('username');
         session()->remove('name');
         session()->remove('level');
+        session()->remove('status');
         session()->remove('loggedIn');
         return redirect()->to(base_url());
     }
