@@ -98,6 +98,8 @@ $routes->get('/report', 'Laporan::index', ['filter' => 'auth']);
 $routes->get('/report/keluar', 'Laporan::keluar', ['filter' => 'auth']);
 $routes->get('/report/export', 'Laporan::print_periode', ['filter' => 'auth']);
 $routes->get('/report/masuk', 'Laporan::masuk', ['filter' => 'auth']);
+$routes->get('/report/stok', 'Laporan::stok', ['filter' => 'auth']);
+
 
 
 /*

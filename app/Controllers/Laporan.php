@@ -72,6 +72,22 @@ class Laporan extends BaseController
         return view('admin/laporan/masuk', $data);
     }
 
+    public function stok()
+    {
+        $currentpage = $this->request->getVar('page_supply') ? $this->request->getVar('page_supply') : 1;
+        $keyword = $this->request->getVar('keyword');
+        $barang = $this->barangModel->orderBy('id_barang', 'DESC');
+        $data = [
+            'title' => 'Data Stok Barang',
+            'barang'  => $barang->paginate(25, 'supply'),
+            'pager' => $this->barangModel->pager,
+            'act'   => $this->actreport,
+            'currentPage' => $currentpage,
+            'keyword' => $keyword,
+        ];
+        return view('admin/laporan/stok', $data);
+    }
+
     // // function to see data with periode
     // public function periode()
     // {
@@ -155,6 +171,40 @@ class Laporan extends BaseController
         $fileName = "Laporan_Barang_Masuk_.pdf";
         $dompdf = new Dompdf();
         $dompdf->loadHtml(view('admin/laporan/print_masuk_periode', $data));
+        $dompdf->setPaper('legal', 'potrait');
+        $dompdf->render();
+        $dompdf->stream($fileName);
+    }
+
+
+    public function print_stok_periode()
+    {
+        $web = $this->webModel->find(1);
+        $currentpage = $this->request->getVar('page_export') ? $this->request->getVar('page_export') : 1;
+        $keyword = $this->request->getVar('keyword');
+        $tanggal_awal = $this->request->getVar('tanggal_awal');
+        $tanggal_akhir = $this->request->getVar('tanggal_akhir');
+        $stok = $this->barangModel->where('updated_at >=', $tanggal_awal)->where('updated_at <=', $tanggal_akhir)->orderBy('id_barang', 'DESC');
+
+        // count $stok
+        $count = $stok->countAllResults();
+
+        $data = [
+            'title' => 'Laporan Data Stok Barang',
+            'stok'  => $stok->paginate($count, 'export'),
+            'pager' => $this->barangModel->pager,
+            'act'   => $this->actreport,
+            'currentPage' => $currentpage,
+            'keyword' => $keyword,
+            'tanggal_awal' => $tanggal_awal,
+            'tanggal_akhir' => $tanggal_akhir,
+            'web' => $web,
+            'count' => $count,
+
+        ];
+        $fileName = "Laporan_Barang_stok_.pdf";
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml(view('admin/laporan/print_stok_periode', $data));
         $dompdf->setPaper('legal', 'potrait');
         $dompdf->render();
         $dompdf->stream($fileName);
