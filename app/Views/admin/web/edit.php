@@ -64,7 +64,9 @@
                     <div class="form-group row">
                         <label for="logo" class="col-sm-2 col-form-label">Logo</label>
                         <div class="col-sm-10">
-                            <input type="file" class="form-control-file <?= ($validation->hasError('logo')) ? 'is-invalid' : ''; ?>" id="logo" name="logo" value="<?= (old('logo')) ? old('logo') : $web['logo'] ?>">
+                            <!-- input image is old file -->
+                            
+                            <input type="file" class="form-control-file <?= ($validation->hasError('logo')) ? 'is-invalid' : ''; ?>" id="logo" name="logo" value="<?= (old('logo')) ? old('logo') : $web['logo'] ?>" required>
                             <div class="invalid-feedback">
                                 <?= $validation->getError('logo'); ?>
                             </div>

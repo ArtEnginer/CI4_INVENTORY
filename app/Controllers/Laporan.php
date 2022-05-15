@@ -11,7 +11,6 @@ use App\Models\SuplaiModel;
 use App\Models\WebModel;
 use Dompdf\Dompdf;
 
-
 class Laporan extends BaseController
 {
     protected $barangModel;
@@ -88,28 +87,6 @@ class Laporan extends BaseController
         return view('admin/laporan/stok', $data);
     }
 
-    // // function to see data with periode
-    // public function periode()
-    // {
-    //     $currentpage = $this->request->getVar('page_export') ? $this->request->getVar('page_export') : 1;
-    //     $keyword = $this->request->getVar('keyword');
-    //     $tanggal_awal = $this->request->getVar('tanggal_awal');
-    //     $tanggal_akhir = $this->request->getVar('tanggal_akhir');
-    //     $keluar = $this->keluarModel->where('tanggal >=', $tanggal_awal)->where('tanggal <=', $tanggal_akhir)->orderBy('tanggal', 'DESC');
-    //     $data = [
-    //         'title' => 'Data Barang Keluar',
-    //         'keluar'  => $keluar->paginate(25, 'export'),
-    //         'pager' => $this->keluarModel->pager,
-    //         'act'   => 'barang',
-    //         'currentPage' => $currentpage,
-    //         'keyword' => $keyword,
-    //         'tanggal_awal' => $tanggal_awal,
-    //         'tanggal_akhir' => $tanggal_akhir,
-    //     ];
-    //     return view('admin/laporan/index', $data);
-    // }
-
-    // function to print data with periode and dompdf
     public function print_keluar_periode()
     {
         $web = $this->webModel->find(1);
@@ -118,29 +95,36 @@ class Laporan extends BaseController
         $tanggal_awal = $this->request->getVar('tanggal_awal');
         $tanggal_akhir = $this->request->getVar('tanggal_akhir');
         $keluar = $this->keluarModel->where('tanggal >=', $tanggal_awal)->where('tanggal <=', $tanggal_akhir)->orderBy('tanggal', 'DESC');
+        // if data cannot find then redirect to index
+        if ($keluar->countAllResults() == 0) {
+            session()->setFlashdata('message', '<div class="alert alert-danger" role="alert">Data tidak ditemukan!</div>');
+            return redirect()->to(base_url('laporan/keluar'))->withInput();
+        } else {
+            $count = $keluar->countAllResults();
+            $data = [
+                'title' => 'Laporan Data Barang Keluar',
+                'keluar'  => $keluar->paginate($count, 'export'),
+                'pager' => $this->keluarModel->pager,
+                'act'   => $this->actreport,
+                'currentPage' => $currentpage,
+                'keyword' => $keyword,
+                'tanggal_awal' => $tanggal_awal,
+                'tanggal_akhir' => $tanggal_akhir,
+                'web' => $web,
+                'count' => $count,
+
+            ];
+            $fileName = "Laporan_Barang_Keluar_.pdf";
+            $dompdf = new Dompdf();
+            $dompdf->loadHtml(view('admin/laporan/print_keluar_periode', $data));
+            $dompdf->setPaper('legal', 'potrait');
+            $dompdf->render();
+            $dompdf->stream($fileName);
+        }
 
         // count $keluar
-        $count = $keluar->countAllResults();
 
-        $data = [
-            'title' => 'Laporan Data Barang Keluar',
-            'keluar'  => $keluar->paginate($count, 'export'),
-            'pager' => $this->keluarModel->pager,
-            'act'   => $this->actreport,
-            'currentPage' => $currentpage,
-            'keyword' => $keyword,
-            'tanggal_awal' => $tanggal_awal,
-            'tanggal_akhir' => $tanggal_akhir,
-            'web' => $web,
-            'count' => $count,
 
-        ];
-        $fileName = "Laporan_Barang_Keluar_.pdf";
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml(view('admin/laporan/print_keluar_periode', $data));
-        $dompdf->setPaper('legal', 'potrait');
-        $dompdf->render();
-        $dompdf->stream($fileName);
     }
 
     public function print_masuk_periode()
@@ -152,28 +136,33 @@ class Laporan extends BaseController
         $tanggal_akhir = $this->request->getVar('tanggal_akhir');
         $masuk = $this->suplaiModel->where('tanggal >=', $tanggal_awal)->where('tanggal <=', $tanggal_akhir)->orderBy('tanggal', 'DESC');
 
-        // count $masuk
-        $count = $masuk->countAllResults();
+        if ($masuk->countAllResults() == 0) {
+            session()->setFlashdata('message', '<div class="alert alert-danger" role="alert">Data tidak ditemukan!</div>');
+            return redirect()->to(base_url('laporan/masuk'))->withInput();
+        } else {
 
-        $data = [
-            'title' => 'Laporan Data Barang masuk',
-            'masuk'  => $masuk->paginate($count, 'export'),
-            'pager' => $this->suplaiModel->pager,
-            'act'   => $this->actreport,
-            'currentPage' => $currentpage,
-            'keyword' => $keyword,
-            'tanggal_awal' => $tanggal_awal,
-            'tanggal_akhir' => $tanggal_akhir,
-            'web' => $web,
-            'count' => $count,
+            $count = $masuk->countAllResults();
 
-        ];
-        $fileName = "Laporan_Barang_Masuk_.pdf";
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml(view('admin/laporan/print_masuk_periode', $data));
-        $dompdf->setPaper('legal', 'potrait');
-        $dompdf->render();
-        $dompdf->stream($fileName);
+            $data = [
+                'title' => 'Laporan Data Barang masuk',
+                'masuk'  => $masuk->paginate($count, 'export'),
+                'pager' => $this->suplaiModel->pager,
+                'act'   => $this->actreport,
+                'currentPage' => $currentpage,
+                'keyword' => $keyword,
+                'tanggal_awal' => $tanggal_awal,
+                'tanggal_akhir' => $tanggal_akhir,
+                'web' => $web,
+                'count' => $count,
+
+            ];
+            $fileName = "Laporan_Barang_Masuk_.pdf";
+            $dompdf = new Dompdf();
+            $dompdf->loadHtml(view('admin/laporan/print_masuk_periode', $data));
+            $dompdf->setPaper('legal', 'potrait');
+            $dompdf->render();
+            $dompdf->stream($fileName);
+        }
     }
 
 
@@ -186,27 +175,30 @@ class Laporan extends BaseController
         $tanggal_akhir = $this->request->getVar('tanggal_akhir');
         $stok = $this->barangModel->where('updated_at >=', $tanggal_awal)->where('updated_at <=', $tanggal_akhir)->orderBy('id_barang', 'DESC');
 
-        // count $stok
-        $count = $stok->countAllResults();
+        if ($stok->countAllResults() == 0) {
+            session()->setFlashdata('message', '<div class="alert alert-danger" role="alert">Data tidak ditemukan!</div>');
+            return redirect()->to(base_url('laporan/stok'))->withInput();
+        } else {
+            $count = $stok->countAllResults();
+            $data = [
+                'title' => 'Laporan Data Stok Barang',
+                'stok'  => $stok->paginate($count, 'export'),
+                'pager' => $this->barangModel->pager,
+                'act'   => $this->actreport,
+                'currentPage' => $currentpage,
+                'keyword' => $keyword,
+                'tanggal_awal' => $tanggal_awal,
+                'tanggal_akhir' => $tanggal_akhir,
+                'web' => $web,
+                'count' => $count,
 
-        $data = [
-            'title' => 'Laporan Data Stok Barang',
-            'stok'  => $stok->paginate($count, 'export'),
-            'pager' => $this->barangModel->pager,
-            'act'   => $this->actreport,
-            'currentPage' => $currentpage,
-            'keyword' => $keyword,
-            'tanggal_awal' => $tanggal_awal,
-            'tanggal_akhir' => $tanggal_akhir,
-            'web' => $web,
-            'count' => $count,
-
-        ];
-        $fileName = "Laporan_Barang_stok_.pdf";
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml(view('admin/laporan/print_stok_periode', $data));
-        $dompdf->setPaper('legal', 'potrait');
-        $dompdf->render();
-        $dompdf->stream($fileName);
+            ];
+            $fileName = "Laporan_Barang_stok_.pdf";
+            $dompdf = new Dompdf();
+            $dompdf->loadHtml(view('admin/laporan/print_stok_periode', $data));
+            $dompdf->setPaper('legal', 'potrait');
+            $dompdf->render();
+            $dompdf->stream($fileName);
+        }
     }
 }

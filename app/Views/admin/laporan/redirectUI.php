@@ -1,4 +1,6 @@
 <div class="container-fluid text-center">
+    <!-- flash data -->
+    <?= session()->getFlashdata('message'); ?>
     <div class="row gap-2">
         <div class="col-3 ">
 
