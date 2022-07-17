@@ -10,29 +10,11 @@
             <div class="card-body">
 
                 <div class="row ">
-                    <form action="<?= base_url('laporan/print_stok_periode') ?>" method="post" _blank>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="">Tanggal Awal</label>
-                                    <input type="date" name="tanggal_awal" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="">Tanggal Akhir</label>
-                                    <input type="date" name="tanggal_akhir" class="form-control" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group ">
-                            <button type="submit" class="btn btn-primary">
-                                <!-- icon print out -->
-                                <i class="fas fa-print"></i>
-                                Cetak
-                            </button>
-                        </div>
-                    </form>
+                
+                    <a href="<?= base_url('laporan/print_stok_periode') ?>" class="btn btn-primary">
+                        <i class="fas fa-print"></i>
+                        Cetak
+                    </a>
                 </div>
 
 

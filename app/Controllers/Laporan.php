@@ -175,9 +175,12 @@ class Laporan extends BaseController
         $web = $this->webModel->find(1);
         $currentpage = $this->request->getVar('page_export') ? $this->request->getVar('page_export') : 1;
         $keyword = $this->request->getVar('keyword');
-        $tanggal_awal = $this->request->getVar('tanggal_awal');
-        $tanggal_akhir = $this->request->getVar('tanggal_akhir');
-        $stok = $this->barangModel->where('updated_at >=', $tanggal_awal)->where('updated_at <=', $tanggal_akhir)->orderBy('id_barang', 'DESC');
+        // $stok = $this->barangModel->orderBy('id_barang', 'DESC');
+        // dd($stok);
+        // $tanggal_awal = $this->request->getVar('tanggal_awal');
+        // $tanggal_akhir = $this->request->getVar('tanggal_akhir');
+        
+        $stok = $this->barangModel->orderBy('id_barang', 'DESC');
 
         if ($stok->countAllResults() == 0) {
             session()->setFlashdata('message', '<div class="alert alert-danger" role="alert">Data tidak ditemukan!</div>');
@@ -185,16 +188,17 @@ class Laporan extends BaseController
         } else {
             $count = $stok->countAllResults();
             $data = [
-                'title' => 'Laporan Data Stok Barang',
-                'stok'  => $stok->paginate($count, 'export'),
-                'pager' => $this->barangModel->pager,
-                'act'   => $this->actreport,
-                'currentPage' => $currentpage,
-                'keyword' => $keyword,
-                'tanggal_awal' => $tanggal_awal,
-                'tanggal_akhir' => $tanggal_akhir,
-                'web' => $web,
-                'count' => $count,
+                'title'            => 'Laporan Data Stok Barang',
+                'stok'             => $stok->paginate($count, 'export'),
+                'pager'            => $this->barangModel->pager,
+                'act'              => $this->actreport,
+                'currentPage'      => $currentpage,
+                'keyword'          => $keyword,
+                'date_time'        => date('Y-m-d H: i: s'),
+                // 'tanggal_awal'  => $tanggal_awal,
+                // 'tanggal_akhir' => $tanggal_akhir,
+                'web'              => $web,
+                'count'            => $count,
 
             ];
             $fileName = "Laporan_Barang_stok_.pdf";

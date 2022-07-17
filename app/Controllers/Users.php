@@ -186,6 +186,13 @@ class Users extends BaseController
                     'required' => 'Level wajib diisi!'
                 ]
             ],
+            'pass_konfirmasi' => [
+                'rules' => 'required|matches[password]',
+                'errors' => [
+                    'required' => 'Kolom Konfirmasi Password wajib diisi!',
+                    'matches' => 'Kolom Konfirmasi Password harus sama!'
+                ]
+            ],
             'status' => [
                 'rules' => 'required',
                 'errors' => [

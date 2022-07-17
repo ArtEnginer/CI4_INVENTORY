@@ -28,9 +28,18 @@
                     <div class="form-group row">
                         <label for="password" class="col-sm-2 col-form-label">Password</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control <?= ($validation->hasError('password')) ? 'is-invalid' : ''; ?>" id="password" name="password" value="<?= old('password'); ?>">
+                            <input type="password" class="form-control <?= ($validation->hasError('password')) ? 'is-invalid' : ''; ?>" id="password" name="password" >
                             <div class="invalid-feedback">
                                 <?= $validation->getError('password'); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="pass_konfirmasi" class="col-sm-3 col-form-label">Ketik Ulang Password Baru Anda</label>
+                        <div class="col-sm-9">
+                            <input type="password" class="form-control <?= ($validation->hasError('pass_konfirmasi')) ? 'is-invalid' : ''; ?>" id="pass_konfirmasi" name="pass_konfirmasi" value="<?= old('pass_konfirmasi') ?>" autocomplete="off">
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('pass_konfirmasi'); ?>
                             </div>
                         </div>
                     </div>
@@ -43,7 +52,7 @@
                                     <?= (old('level')) ? old('level') : $admin['level'] ?>
                                 </option>
                                 <option value="Admin">Admin</option>
-                                <option value="Kasir">Kasir</option>
+                                <option value="Operator">Operator</option>
                             </select>
                             <div class="invalid-feedback">
                                 <?= $validation->getError('level'); ?>

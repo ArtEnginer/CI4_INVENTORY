@@ -80,10 +80,9 @@
                     echo $exp[0];
                     ?></td>
 
-                <td width="200px"></td>
-                <td>Periode</td>
+                <td>Tanggal Cetak</td>
                 <td>:</td>
-                <td><?= $tanggal_awal  ?> - <?= $tanggal_akhir ?></td>
+                <td><?= $date_time ?></td>
             </tr>
 
             <tr>
