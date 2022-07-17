@@ -105,6 +105,7 @@
             <tr>
                 <td style="width: 70px;">No.</td>
                 <td style="width: 100px;">ID</td>
+                <td>Nama Barang</td>
                 <td style="width: 120px;">Suplayer</td>
                 <td style="width: 120px;">tanggal</td>
                 <td>Keterangan</td>
@@ -118,6 +119,7 @@
                 <tr align="center">
                     <td><?= $i++ ?></td>
                     <td><?= $data[] = $data['id_suplai'] ?></td>
+                    <td><?= $masukDetail->detail($data['id_suplai'])[0]['nm_barang'] ?></td>
                     <td><?= $data[] = $data['penyuplai'] ?></td>
                     <td><?= $data[] = $data['tanggal'] ?></td>
                     <td align="left"><?= nl2br($data[] = $data['keterangan']) ?></td>

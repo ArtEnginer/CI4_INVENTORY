@@ -95,6 +95,7 @@ class Laporan extends BaseController
         $tanggal_awal = $this->request->getVar('tanggal_awal');
         $tanggal_akhir = $this->request->getVar('tanggal_akhir');
         $keluar = $this->keluarModel->where('tanggal >=', $tanggal_awal)->where('tanggal <=', $tanggal_akhir)->orderBy('tanggal', 'DESC');
+        $keluarDetail = $this->keluarDetailModel;
         // if data cannot find then redirect to index
         if ($keluar->countAllResults() == 0) {
             session()->setFlashdata('message', '<div class="alert alert-danger" role="alert">Data tidak ditemukan!</div>');
@@ -104,6 +105,7 @@ class Laporan extends BaseController
             $data = [
                 'title' => 'Laporan Data Barang Keluar',
                 'keluar'  => $keluar->paginate($count, 'export'),
+                'keluarDetail' => $keluarDetail,
                 'pager' => $this->keluarModel->pager,
                 'act'   => $this->actreport,
                 'currentPage' => $currentpage,
@@ -135,6 +137,7 @@ class Laporan extends BaseController
         $tanggal_awal = $this->request->getVar('tanggal_awal');
         $tanggal_akhir = $this->request->getVar('tanggal_akhir');
         $masuk = $this->suplaiModel->where('tanggal >=', $tanggal_awal)->where('tanggal <=', $tanggal_akhir)->orderBy('tanggal', 'DESC');
+        $masukDetail = $this->suplaiDetailModel;
 
         if ($masuk->countAllResults() == 0) {
             session()->setFlashdata('message', '<div class="alert alert-danger" role="alert">Data tidak ditemukan!</div>');
@@ -146,6 +149,7 @@ class Laporan extends BaseController
             $data = [
                 'title' => 'Laporan Data Barang masuk',
                 'masuk'  => $masuk->paginate($count, 'export'),
+                'masukDetail' => $masukDetail,
                 'pager' => $this->suplaiModel->pager,
                 'act'   => $this->actreport,
                 'currentPage' => $currentpage,

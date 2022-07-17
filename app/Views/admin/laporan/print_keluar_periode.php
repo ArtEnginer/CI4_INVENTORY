@@ -105,6 +105,7 @@
             <tr>
                 <td style="width: 70px;">No.</td>
                 <td style="width: 100px;">ID</td>
+                <td style="width: 200px;">Nama Barang</td>           
 
                 <td style="width: 120px;">Tanggal Keluar</td>
                 <td>Keterangan</td>
@@ -118,7 +119,10 @@
                 <tr align="center">
                     <td><?= $i++ ?></td>
                     <td><?= $data[] = $data['id_keluar'] ?></td>
-
+                    <td><?php  $da = $keluarDetail->detail($data['id_keluar']);
+                    echo $da[0]['nm_barang']; ?></td>
+                    ) ?></td>
+                    
                     <td><?= $data[] = $data['tanggal'] ?></td>
                     <td align="left"><?= nl2br($data[] = $data['keterangan']) ?></td>
 

@@ -103,6 +103,13 @@ class Users extends BaseController
                     'required' => 'Password wajib diisi!'
                 ]
             ],
+            'pass_konfirmasi' => [
+                'rules' => 'required|matches[password]',
+                'errors' => [
+                    'required' => 'Kolom Konfirmasi Password wajib diisi!',
+                    'matches' => 'Kolom Konfirmasi Password harus sama!'
+                ]
+            ],
             'level' => [
                 'rules' => 'required',
                 'errors' => [
@@ -130,6 +137,8 @@ class Users extends BaseController
             'username' => $this->request->getVar('username'),
             'level' => $this->request->getVar('level'),
             'status' => $this->request->getVar('status'),
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
         ];
 
         $this->db->transStart();
@@ -231,7 +240,6 @@ class Users extends BaseController
             'act' => $this->actadministrator,
         ];
         return view('admin/users/profil/index', $data);
-       
     }
 
     public function pass()

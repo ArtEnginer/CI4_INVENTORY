@@ -27,7 +27,7 @@
      </div>
      <hr class="horizontal dark">
      <!-- <div class="collapse navbar-collapse w-auto  " id="sidenav-collapse-main"> -->
-     <ul class="navbar-nav collapse navbar-collapse w-auto" id="sidenav-collapse-main">
+     <ul class="navbar-nav" id="sidenav-collapse-main">
          <li class="nav-item">
              <a class="nav-link <?= $act == 'dashboard' ? 'active' : '' ?>" href="<?= base_url() ?>/dashboard">
                  <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -147,47 +147,35 @@
                      <span class="nav-link-text ms-1">Administrator</span>
                  </a>
              </li>
+             <li class="nav-item">
+                 <a href="<?= base_url('users/profil') ?>" class="btn btn-white btn-sm w-100 mb-0">profile</a>
+             </li>
+
          <?php } ?>
 
 
      </ul>
      <!-- </div> -->
      <!-- footer -->
-     <div class="sidenav-footer mx-3 ">
-         <div class="card card-background shadow-none card-background-mask-secondary" id="sidenavCard">
-             <div class="full-background" style="background-image: url('<?= base_url() ?>/assets/img/curved-images/white-curved.jpg')"></div>
-             <div class="card-body text-start p-3 w-100">
-                 <div class="icon icon-shape icon-sm bg-white shadow text-center mb-3 d-flex align-items-center justify-content-center border-radius-md">
-                     <i class="ni ni-diamond text-dark text-gradient text-lg top-0" aria-hidden="true" id="sidenavCardIcon"></i>
-                 </div>
-                 <div class="docs-info text-center">
-
-                     <h3 class="text-white up mb-0">
+     <div class="navbar-footer">
+         <div class="navbar-footer-content">
+             <div class="row">
+                 <div class="col-md-12">
+                     <p class="btn bg-gradient-primary mt-2 w-100">
+                     <span class="text-white">
                          <?php $exp = explode(" ", session()->get('name'));
                             echo $exp[0]; ?>
-                     </h3>
-                     <p class="text-xs font-weight-bold">
-                         <?php $exp = explode(" ", session()->get('level'));
-                            echo $exp[0]; ?>
+                     </span> <br>
+                     <span class="text-white">
+                         <?php echo date('l, d F Y'); ?>
+                     </span>
                      </p>
-                     <!-- send id user parameter -->
-
-                     <?php
-                        $exp = explode(" ", session()->get('idUser'));
-                        echo $exp[0];
-                        ?>
-
-                     <a data-slide="true" href="<?= base_url('users/profil') ?>" class="btn btn-white btn-sm w-100 mb-0">profile</a>
                  </div>
+                
              </div>
          </div>
-         <!-- show datetime now -->
-         <p class="btn bg-gradient-primary mt-3 w-100">
-             <span class="text-white">
-                 <?php echo date('l, d F Y'); ?>
-             </span>
-         </p>
      </div>
+
 
  </aside>
 

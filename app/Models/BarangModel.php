@@ -43,7 +43,10 @@ class BarangModel extends Model
 
     public function notifikasi_stok($min)
     {
-        return $this->where('stok <=', $min)->get()->getResultArray();
+        // if<= $min select * from barang where stok <= $min
+        return $this->where('stok <=', $min)->findAll();
+        
+
     }
 
     // function to sum all the stock
@@ -61,7 +64,6 @@ class BarangModel extends Model
             ->get()->getResultArray();
 
             
-
        
     }
     

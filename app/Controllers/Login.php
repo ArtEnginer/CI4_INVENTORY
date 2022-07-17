@@ -34,7 +34,16 @@ class Login extends BaseController
                     
                     session()->set('loggedIn', true);
 
-                    session()->setflashdata('success', 'Selamat Datang, ' . session()->get('name'));
+                    session()->setflashdata('success', '
+                    <script>
+                        swal({
+                            title: "Berhasil",
+                            text: "Selamat Datang",
+                            icon: "success",
+                            button: "OK",
+                        });
+                    </script>
+                    <b>LOGIN BERHASIL !!</b>Selamat Datang, ' . session()->get('name'));
                     return redirect()->to(base_url('dashboard'))->withInput();
                 } else {
                     session()->setflashdata('failed', 'Maaf, Status anda sudah Tidak Aktif');

@@ -42,6 +42,9 @@
     <!-- JQueryUI -->
     <link rel="stylesheet" href="<?= base_url() ?>/assets/plugins/jquery-ui/jquery-ui.min.css">
 
+    <!-- sweetalert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <script>
         function isNumberKeyTrue(evt) {
             var charCode = (evt.which) ? evt.which : event.keyCode
@@ -86,7 +89,7 @@
     <!-- /.navbar -->
 
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-        <div >
+        <div>
             <?= $this->include('admin/layout/navbar'); ?>
         </div>
         <!-- Navbar -->

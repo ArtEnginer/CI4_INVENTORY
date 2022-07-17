@@ -5,6 +5,7 @@ namespace App\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 
+
 class Users extends Seeder
 {
 
@@ -15,7 +16,7 @@ class Users extends Seeder
             'id_user' => 'AD001',
             'nm_user' => 'Rico',
             'username' => 'admin',
-            'password' => '$2y$10$fnUd/srAXkxfFSWGBr0QAugnT5jRQyGq.QnxolbMg4lXMM5L9XGeS',
+            'password' => password_hash('admin', PASSWORD_DEFAULT),
             'level' => 'Admin',
             'status' => 'Aktif',
             'created_at' => null,
