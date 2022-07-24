@@ -24,7 +24,26 @@
         <ul class="navbar-nav  justify-content-end">
 
           <li class="nav-item d-flex align-items-center">
-            <a href="<?= base_url('logout') ?>" class="nav-link text-body font-weight-bold px-0">
+            <a class="nav-link text-body font-weight-bold px-0" onclick="alertlogout()">
+            <script>
+              function alertlogout() {
+                // confirm using sweetalert
+                swal({
+                  title: "Are you sure?",
+                  text: "You will be logged out!",
+                  icon: "warning",
+                  buttons: true,
+                  dangerMode: true,
+                })
+                .then((willDelete) => {
+                  if (willDelete) {
+                    window.location.href = '<?= base_url('logout') ?>';
+                  } else {
+                    swal("Cancelled", "You are safe!", "error");
+                  }
+                });
+              }
+            </script>
               <i class="fa fa-user me-sm-1"></i>
               <span class="d-sm-inline d-none">Log Out</span>
             </a>
