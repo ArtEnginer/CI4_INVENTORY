@@ -107,7 +107,7 @@
 
                 <td style="width: 120px;">Nama Barang</td>
 
-                <td style="width: 120px;">Spek</td>
+                <td style="width: 120px;">Spesifikasi</td>
 
                 <td style="width: 50px;">Satuan</td>
 
