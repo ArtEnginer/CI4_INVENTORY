@@ -17,6 +17,8 @@
 
                 <p>
                     <a href="<?= base_url('item/add') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</a>
+                    <!-- musnahkan barang -->
+                    <a href="<?= base_url('/musnah') ?>" class="btn btn-danger"><i class="fas fa-trash"></i> Tidak terpakai</a>
                 </p>
                 <table id="dataTable1" class="table table-bordered table-hover table-striped">
                     <thead align="center">
@@ -25,6 +27,7 @@
                             <td style="width: 100px;">ID</td>
                             <td>Nama Barang</td>
                             <td style="width: 200px;">Stok</td>
+                            <td>Status</td>
                             <td style="width: 80px;">Action</td>
                         </tr>
                     </thead>
@@ -36,11 +39,13 @@
                                 <td><?= $data['id_barang'] ?></td>
                                 <td align="left"><?= $data['nm_barang'] ?></td>
                                 <td><?= ribuan($data['stok']) . ' ' . $data['satuan'] ?></td>
+                                <td><?= $data['status'] == 1 ? 'Barang Habis Pakai' : 'Tidak Habis Pakai' ?></td>
                                 <td>
                                     <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#lihat<?= $data['id_barang']; ?>">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                     <a href="<?= base_url('item/edit/' . $data['id_barang']) ?>" class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                    <a href="<?= base_url('item/delete/' . $data['id_barang']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus data ini?')"><i class="fas fa-trash"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

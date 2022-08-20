@@ -33,6 +33,21 @@
                         </div>
                     </div>
 
+                    <!-- status barang -->
+                    <div class="form-group row">
+                        <label for="status" class="col-sm-2 col-form-label">Status Barang</label>
+                        <div class="col-sm-10">
+                            <select class="form-control <?= ($validation->hasError('status')) ? 'is-invalid' : ''; ?>" id="status" name="status">
+                                <option value="">-- Pilih Status --</option>
+                                <option value="1" <?= (old('status') == 1) ? 'selected' : ''; ?>>Barang Habis Pakai</option>
+                                <option value="0" <?= (old('status') == 0) ? 'selected' : ''; ?>>Tidak Habis Pakai</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('status'); ?>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="float-right">
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>

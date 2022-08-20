@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 17 Jul 2022 pada 17.54
+-- Waktu pembuatan: 20 Agu 2022 pada 16.13
 -- Versi server: 10.4.24-MariaDB
 -- Versi PHP: 8.1.6
 
@@ -33,17 +33,26 @@ CREATE TABLE `barang` (
   `spek` varchar(100) DEFAULT NULL,
   `satuan` varchar(100) DEFAULT NULL,
   `stok` int(100) DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data untuk tabel `barang`
+-- Struktur dari tabel `barang_musnah`
 --
 
-INSERT INTO `barang` (`id_barang`, `nm_barang`, `spek`, `satuan`, `stok`, `created_at`, `updated_at`) VALUES
-('B-220717001', 'BUKU TIK', 'sadfdf', 'Jilid', 52, '2022-07-17 20:58:16', '2022-07-17 21:04:52'),
-('B-220717002', 'BUKU JAWA', 'hjgadshgfadfd', 'Rim', 100, '2022-07-17 22:45:49', '2022-07-17 22:46:50');
+CREATE TABLE `barang_musnah` (
+  `id_barang_musnah` varchar(12) NOT NULL,
+  `id_barang` varchar(12) DEFAULT NULL,
+  `kode_barang` varchar(255) DEFAULT NULL,
+  `jumlah` int(11) DEFAULT NULL,
+  `keterangan` varchar(100) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -59,13 +68,6 @@ CREATE TABLE `keluar` (
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data untuk tabel `keluar`
---
-
-INSERT INTO `keluar` (`id_keluar`, `tanggal`, `keterangan`, `created_at`, `updated_at`) VALUES
-('BK-220717001', '2022-07-17', 'dsfsd', '2022-07-17 21:00:01', '2022-07-17 21:00:01');
-
 -- --------------------------------------------------------
 
 --
@@ -78,13 +80,6 @@ CREATE TABLE `keluar_detail` (
   `jumlah` int(11) DEFAULT NULL,
   `spek` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data untuk tabel `keluar_detail`
---
-
-INSERT INTO `keluar_detail` (`id_keluar`, `id_barang`, `jumlah`, `spek`) VALUES
-('BK-220717001', 'B-220717001', 50, 'sadfdf');
 
 -- --------------------------------------------------------
 
@@ -102,19 +97,6 @@ CREATE TABLE `migrations` (
   `batch` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data untuk tabel `migrations`
---
-
-INSERT INTO `migrations` (`id`, `version`, `class`, `group`, `namespace`, `time`, `batch`) VALUES
-(1, '2022-04-16-064215', 'App\\Database\\Migrations\\Users', 'default', 'App', 1658065217, 1),
-(2, '2022-04-16-064715', 'App\\Database\\Migrations\\Barang', 'default', 'App', 1658065217, 1),
-(3, '2022-04-16-065002', 'App\\Database\\Migrations\\Keluar', 'default', 'App', 1658065218, 1),
-(4, '2022-04-16-065245', 'App\\Database\\Migrations\\KeluarDetail', 'default', 'App', 1658065218, 1),
-(5, '2022-04-16-065551', 'App\\Database\\Migrations\\Suplai', 'default', 'App', 1658065218, 1),
-(6, '2022-04-16-070006', 'App\\Database\\Migrations\\SuplaiDetail', 'default', 'App', 1658065219, 1),
-(7, '2022-04-16-070252', 'App\\Database\\Migrations\\Web', 'default', 'App', 1658065219, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -130,15 +112,6 @@ CREATE TABLE `suplai` (
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data untuk tabel `suplai`
---
-
-INSERT INTO `suplai` (`id_suplai`, `penyuplai`, `tanggal`, `keterangan`, `created_at`, `updated_at`) VALUES
-('BM-220717001', 'PT.Sejuta Cita', '2022-07-17', 'hghggf', '2022-07-17 20:58:49', '2022-07-17 20:58:49'),
-('BM-220717002', 'PT.Sejuta Cita', '2022-07-17', 'sd', '2022-07-17 21:04:52', '2022-07-17 21:04:52'),
-('BM-220717003', 'PT.Sejuta Cita', '2022-07-17', 'asdfadadf', '2022-07-17 22:46:50', '2022-07-17 22:46:50');
-
 -- --------------------------------------------------------
 
 --
@@ -150,15 +123,6 @@ CREATE TABLE `suplai_detail` (
   `id_barang` varchar(12) NOT NULL,
   `jumlah` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data untuk tabel `suplai_detail`
---
-
-INSERT INTO `suplai_detail` (`id_suplai`, `id_barang`, `jumlah`) VALUES
-('BM-220717001', 'B-220717001', 100),
-('BM-220717002', 'B-220717001', 2),
-('BM-220717003', 'B-220717002', 100);
 
 -- --------------------------------------------------------
 
@@ -182,9 +146,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `nm_user`, `username`, `password`, `level`, `status`, `created_at`, `updated_at`) VALUES
-('AD001', 'Rico', 'admin', '$2y$10$MIzpHHsx.afZ4ocZ0G3IcuWAQNVwZ15PU8QRL2ov/7vorGYcmvbXS', 'Admin', 'Aktif', '1900-01-14 21:21:37', '2022-07-17 21:21:30'),
-('AD002', 'Angga', 'akuntansi', '$2y$10$Soe3X49iGUz7zH1nU0nvyO.a06Qw6nE9KHAJNQhR48nF1sMDUaF0a', 'Operator', 'Aktif', '2022-07-17 21:24:07', '2022-07-17 21:24:07'),
-('AD003', 'Rudi Berber', 'angga2', '$2y$10$0uBWruD7ANrwKRwWqmTOiePblN3dsKKvZxSOO6AzppHzfT9xp4Qoq', 'Admin', 'Aktif', '2022-07-17 21:30:13', '2022-07-17 21:30:13');
+('AD001', 'Rico', 'admin', '$2y$10$Bkuh0KCRSYiWjOUn6SLNCe0HCPi3jhsfuK8LA28PfG37jm38ynkyK', 'Admin', 'Aktif', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -224,7 +186,7 @@ CREATE TABLE `web` (
 --
 
 INSERT INTO `web` (`id_web`, `nm_web`, `alamat`, `email`, `telp`, `min_stok`, `logo`, `created_at`, `updated_at`) VALUES
-('1', 'IPMB', 'Jl.Raya Bumiayu, 01/01, Kel.Bumiayu, Kab. Brebes, 52272', 'admin@gmail.com', '098765432', '2', 'logo.png', NULL, '2022-07-17 22:12:40');
+('1', 'IMS-Item Management System', 'Jl.Raya Bumiayu, 01/01, Kel.Bumiayu, Kab. Brebes, 52272', 'admin@gmail.com', '098765432', '2', 'logo.png', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -244,6 +206,12 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 ALTER TABLE `barang`
   ADD PRIMARY KEY (`id_barang`);
+
+--
+-- Indeks untuk tabel `barang_musnah`
+--
+ALTER TABLE `barang_musnah`
+  ADD PRIMARY KEY (`id_barang_musnah`);
 
 --
 -- Indeks untuk tabel `keluar`
@@ -296,7 +264,7 @@ ALTER TABLE `web`
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

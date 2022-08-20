@@ -32,6 +32,20 @@
                             <textarea class="form-control" rows="3" id="spek" name="spek"><?= (old('spek')) ? old('spek') : $barang['spek'] ?></textarea>
                         </div>
                     </div>
+                    <!-- Status Barang -->
+                    <div class="form-group row">
+                        <label for="status" class="col-sm-2 col-form-label">Status</label>
+                        <div class="col-sm-10">
+                            <select class="form-control <?= ($validation->hasError('status')) ? 'is-invalid' : ''; ?>" id="status" name="status">
+                                <option value="">-- Pilih Status --</option>
+                                <option value="1" <?= ($barang['status'] == 1) ? 'selected' : '' ?>>Barang Habis Pakai</option>
+                                <option value="0" <?= ($barang['status'] == 0) ? 'selected' : '' ?>>Tidak Habis Pakai</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('status'); ?>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="float-right">
                         <button type="submit" class="btn btn-primary">Ubah</button>

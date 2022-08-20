@@ -9,7 +9,7 @@ class BarangModel extends Model
     protected $table = 'barang';
     protected $primaryKey = 'id_barang';
     protected $useTimestamps = true;
-    protected $allowedFields = ['id_barang', 'nm_barang', 'spek', 'satuan', 'stok'];
+    protected $allowedFields = ['id_barang', 'nm_barang', 'spek', 'satuan', 'stok','status'];
 
     public function kodegen()
     {
@@ -61,11 +61,9 @@ class BarangModel extends Model
         return $this->select('barang.id_barang, barang.nm_barang, barang.stok, SUM(keluar_detail.jumlah) as jumlah')
             ->join('keluar_detail', 'keluar_detail.id_barang = barang.id_barang')
             ->groupBy('barang.id_barang')
-            ->get()->getResultArray();
-
-            
-       
+            ->get()->getResultArray();        
     }
+
     
 
 }

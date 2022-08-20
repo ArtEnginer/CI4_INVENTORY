@@ -65,6 +65,20 @@ $routes->post('/item/update/(:segment)', 'Barang::ubah_data/$1', ['filter' => 'a
 $routes->get('/item/(:segment)', 'Barang::detail/$1', ['filter' => 'auth']);
 $routes->post('/item/searching', 'Barang::pencarian', ['filter' => 'auth']);
 $routes->get('/item/search/(:segment)', 'Barang::cari/$1', ['filter' => 'auth']);
+// hapus
+$routes->get('/item/delete/(:segment)', 'Barang::hapus/$1', ['filter' => 'auth']);
+
+// barangMusnah
+$routes->get('/musnah', 'BarangMusnah::index', ['filter' => 'auth']);
+$routes->get('/musnah/add', 'BarangMusnah::tambah', ['filter' => 'auth']);
+$routes->post('/musnah/save', 'BarangMusnah::simpan', ['filter' => 'auth']);
+$routes->get('/musnah/edit/(:segment)', 'BarangMusnah::ubah/$1', ['filter' => 'auth']);
+$routes->post('/musnah/update/(:segment)', 'BarangMusnah::update/$1', ['filter' => 'auth']);
+$routes->get('/musnah/(:segment)', 'BarangMusnah::detail/$1', ['filter' => 'auth']);
+$routes->post('/musnah/searching', 'BarangMusnah::pencarian', ['filter' => 'auth']);
+$routes->get('/musnah/search/(:segment)', 'BarangMusnah::cari/$1', ['filter' => 'auth']);
+// hapus
+$routes->get('/musnah/delete/(:segment)', 'BarangMusnah::delete/$1', ['filter' => 'auth']);
 
 $routes->get('/supply', 'Suplai::index', ['filter' => 'auth']);
 $routes->get('/supply/new', 'Suplai::tambah', ['filter' => 'auth']);

@@ -96,7 +96,13 @@ class Barang extends BaseController
                     'required' => 'Satuan wajib diisi!',
                     'max_length' => 'Panjang maksimal untuk kolom ini sebesar 10 huruf!'
                 ]
-            ]
+                ],
+                'status' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Status wajib diisi!',
+                    ]
+                ],
         ])) {
             return redirect()->to(base_url('/item/add'))->withInput();
         }
@@ -110,6 +116,7 @@ class Barang extends BaseController
             'spek' => $this->request->getVar('spek'),
             'satuan' => ucwords($this->request->getVar('satuan')),
             'stok' => $stok,
+            'status' => $this->request->getVar('status'),
         ];
 
         $this->db->transStart();
@@ -157,7 +164,13 @@ class Barang extends BaseController
                     'required' => 'Satuan wajib diisi!',
                     'max_length' => 'Panjang maksimal untuk kolom ini sebesar 10 huruf!'
                 ]
-            ]
+                ],
+                'status' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Status wajib diisi!',
+                    ]
+                ],
         ])) {
             return redirect()->to(base_url('/item/edit/' . $idBarang))->withInput();
         }
@@ -169,6 +182,7 @@ class Barang extends BaseController
             'nm_barang' => $this->request->getVar('nm_barang'),
             'spek' => $this->request->getVar('spek'),
             'satuan' => ucwords($this->request->getVar('satuan')),
+            'status' => $this->request->getVar('status'),
         ];
 
         $this->db->transStart();
@@ -197,5 +211,27 @@ class Barang extends BaseController
             ];
         endforeach;
         echo json_encode($w);
+    }
+
+    public function hapus($id)
+    {
+        
+        $barang = $this->barangModel->find($id);
+        if (empty($barang)) {
+            session()->setflashdata('failed', 'Oops... Data tidak ditemukan. Silahkan pilih data.');
+            return redirect()->to(base_url('/item'));
+        }
+        $this->db->transStart();
+        $this->barangModel->delete($id);
+        $this->db->transComplete();
+        if ($this->db->transStatus() == false) {
+            session()->setflashdata('failed', 'Data barang gagal dihapus.');
+            return redirect()->to(base_url('item'));
+        } elseif ($this->db->transStatus() == true) {
+            session()->setflashdata('success', 'Data barang berhasil dihapus.');
+            return redirect()->to(base_url('item'));
+        }
+       
+      
     }
 }
