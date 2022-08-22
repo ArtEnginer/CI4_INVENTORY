@@ -9,6 +9,7 @@ use App\Models\KeluarModel;
 use App\Models\SuplaiDetailModel;
 use App\Models\SuplaiModel;
 use App\Models\WebModel;
+use App\Models\BarangMusnahModel;
 use Dompdf\Dompdf;
 
 class Laporan extends BaseController
@@ -18,6 +19,7 @@ class Laporan extends BaseController
     protected $keluarDetailModel;
     protected $suplaiModel;
     protected $suplaiDetailModel;
+    protected $barangMusnahModel;
 
     public function __construct()
     {
@@ -27,6 +29,7 @@ class Laporan extends BaseController
         $this->suplaiModel = new SuplaiModel();
         $this->suplaiDetailModel = new SuplaiDetailModel();
         $this->webModel = new WebModel();
+        $this->barangMusnahModel = new BarangMusnahModel();
         $this->actreport = 'report';
     }
 
@@ -85,6 +88,22 @@ class Laporan extends BaseController
             'keyword' => $keyword,
         ];
         return view('admin/laporan/stok', $data);
+    }
+
+    public function musnah()
+    {
+        $currentpage = $this->request->getVar('page_supply') ? $this->request->getVar('page_supply') : 1;
+        $keyword = $this->request->getVar('keyword');
+        $barangMusnah = $this->barangMusnahModel->orderBy('id_barang', 'DESC');
+        $data = [
+            'title' => 'Data Barang Tidak Terpakai',
+            'barangMusnah'  => $barangMusnah->paginate(25, 'supply'),
+            'pager' => $this->barangMusnahModel->pager,
+            'act'   => $this->actreport,
+            'currentPage' => $currentpage,
+            'keyword' => $keyword,
+        ];
+        return view('admin/laporan/musnah', $data);
     }
 
     public function print_keluar_periode()
@@ -209,4 +228,44 @@ class Laporan extends BaseController
             $dompdf->stream($fileName);
         }
     }
+
+    public function print_musnah_periode(){
+        $web = $this->webModel->find(1);
+        $currentpage = $this->request->getVar('page_export') ? $this->request->getVar('page_export') : 1;
+        $keyword = $this->request->getVar('keyword');
+        // $tanggal_awal = $this->request->getVar('tanggal_awal');
+        // $tanggal_akhir = $this->request->getVar('tanggal_akhir');
+        $musnah = $this->barangMusnahModel->orderBy('id_barang_musnah', 'DESC');
+        // $musnahDetail = $this->musnahDetailModel;
+
+        if ($musnah->countAllResults() == 0) {
+            session()->setFlashdata('message', '<div class="alert alert-danger" role="alert">Data tidak ditemukan!</div>');
+            return redirect()->to(base_url('laporan/musnah'))->withInput();
+        } else {
+            $count = $musnah->countAllResults();
+            $data = [
+                'title' => 'Laporan Data Barang Musnah',
+                'musnah'  => $musnah->paginate($count, 'export'),
+                // 'musnahDetail' => $musnahDetail,
+                'pager' => $this->barangMusnahModel->pager,
+                'act'   => $this->actreport,
+                'currentPage' => $currentpage,
+                'keyword' => $keyword,
+                // 'tanggal_awal' => $tanggal_awal,
+                // 'tanggal_akhir' => $tanggal_akhir,
+                'web' => $web,
+                'count' => $count,
+
+            ];
+            $fileName = "Laporan_Barang_Musnah_.pdf";
+            $dompdf = new Dompdf();
+            $dompdf->loadHtml(view('admin/laporan/print_musnah_periode', $data));
+            $dompdf->setPaper('legal', 'potrait');
+            $dompdf->render();
+            $dompdf->stream($fileName);
+        }
+
+    }
+
+
 }
