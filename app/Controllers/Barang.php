@@ -83,6 +83,7 @@ class Barang extends BaseController
 
     public function simpan()
     {
+
         if (!$this->validate([
             'nm_barang' => [
                 'rules' => 'required',
@@ -96,19 +97,35 @@ class Barang extends BaseController
                     'required' => 'Satuan wajib diisi!',
                     'max_length' => 'Panjang maksimal untuk kolom ini sebesar 10 huruf!'
                 ]
-                ],
-                'status' => [
-                    'rules' => 'required',
-                    'errors' => [
-                        'required' => 'Status wajib diisi!',
-                    ]
-                ],
+            ],
+            'status' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Status wajib diisi!',
+                ]
+            ],
+            'gambar' => [
+                'rules' => 'uploaded[gambar]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]',
+                'errors' => [
+                    'uploaded' => 'Gambar wajib diisi!',
+                    'is_image' => 'Yang anda pilih bukan gambar!',
+                    'mime_in' => 'Yang anda pilih bukan gambar!',
+                ]
+            ],
         ])) {
             return redirect()->to(base_url('/item/add'))->withInput();
         }
 
+
         $idBarang = $this->barangModel->kodegen();
         $stok = 0;
+        $gambar = $this->request->getFile('gambar');
+        if ($gambar->getError() == 4) {
+            $gambar = 'default.jpg';
+        } else {
+            $gambar = $gambar->getName();
+            $gambar = $idBarang . '-' . $gambar;
+        }
 
         $data = [
             'id_barang' => $idBarang,
@@ -117,7 +134,10 @@ class Barang extends BaseController
             'satuan' => ucwords($this->request->getVar('satuan')),
             'stok' => $stok,
             'status' => $this->request->getVar('status'),
+            'gambar' => $gambar,
         ];
+
+        $this->request->getFile('gambar')->move('./assets/img/barang/', $gambar);
 
         $this->db->transStart();
         $this->barangModel->insert($data);
@@ -164,26 +184,45 @@ class Barang extends BaseController
                     'required' => 'Satuan wajib diisi!',
                     'max_length' => 'Panjang maksimal untuk kolom ini sebesar 10 huruf!'
                 ]
-                ],
-                'status' => [
-                    'rules' => 'required',
-                    'errors' => [
-                        'required' => 'Status wajib diisi!',
-                    ]
-                ],
+            ],
+            'status' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Status wajib diisi!',
+                ]
+            ],
+
         ])) {
             return redirect()->to(base_url('/item/edit/' . $idBarang))->withInput();
         }
 
         $barang = $this->barangModel->find($idBarang);
+        if (empty($barang)) {
+            session()->setflashdata('failed', 'Oops... Data tidak ditemukan. Silahkan pilih data.');
+            return redirect()->to(base_url('/item'))->withInput();
+        }
+
+        // jika gambar tidak diubah 
+        if ($this->request->getFile('gambar')->getError() == 4) {
+            $gambar = $barang['gambar'];
+        } else {
+            $gambar = $this->request->getFile('gambar');
+            $gambar = $gambar->getName();
+            $gambar = $idBarang . '-' . $gambar;
+        }
 
         $data = [
-            'id_barang' => $barang['id_barang'],
             'nm_barang' => $this->request->getVar('nm_barang'),
             'spek' => $this->request->getVar('spek'),
             'satuan' => ucwords($this->request->getVar('satuan')),
             'status' => $this->request->getVar('status'),
+            'gambar' => $gambar,
         ];
+        if ($this->request->getFile('gambar')->getError() != 4) {
+            unlink('./assets/img/barang/' . $barang['gambar']);
+            $this->request->getFile('gambar')->move('./assets/img/barang/', $gambar);
+        }
+
 
         $this->db->transStart();
         $this->barangModel->update($barang['id_barang'], $data);
@@ -215,12 +254,15 @@ class Barang extends BaseController
 
     public function hapus($id)
     {
-        
+
         $barang = $this->barangModel->find($id);
+
         if (empty($barang)) {
             session()->setflashdata('failed', 'Oops... Data tidak ditemukan. Silahkan pilih data.');
             return redirect()->to(base_url('/item'));
         }
+        // unlink gambar
+        unlink('./assets/img/barang/' . $barang['gambar']);
         $this->db->transStart();
         $this->barangModel->delete($id);
         $this->db->transComplete();
@@ -231,7 +273,5 @@ class Barang extends BaseController
             session()->setflashdata('success', 'Data barang berhasil dihapus.');
             return redirect()->to(base_url('item'));
         }
-       
-      
     }
 }

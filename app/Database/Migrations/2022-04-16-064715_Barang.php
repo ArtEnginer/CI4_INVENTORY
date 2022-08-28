@@ -36,6 +36,11 @@ class Barang extends Migration
                 'constraint' => '100',
                 'null' => true,
             ],
+            'gambar' => [
+                'type' => 'VARCHAR',
+                'constraint' => '100',
+                'null' => true,
+            ],
             'status' => [
                 'type' => 'VARCHAR',
                 'constraint' => '100',

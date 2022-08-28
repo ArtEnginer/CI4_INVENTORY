@@ -24,6 +24,7 @@
                     <thead align="center">
                         <tr>
                             <td style="width: 70px;">No.</td>
+                            <td>Gambar</td>
                             <td style="width: 100px;">ID</td>
                             <td>Nama Barang</td>
                             <td style="width: 200px;">Stok</td>
@@ -36,6 +37,9 @@
                         foreach ($barang as $data) : ?>
                             <tr align="center">
                                 <td><?= $i++ ?></td>
+                                <td>
+                                    <img src="<?= base_url('assets/img/barang/').'/' . $data['gambar']?? 'default.jpg' ?>" width="100px" height="100px">
+                                </td>
                                 <td><?= $data['id_barang'] ?></td>
                                 <td align="left"><?= $data['nm_barang'] ?></td>
                                 <td><?= ribuan($data['stok']) . ' ' . $data['satuan'] ?></td>

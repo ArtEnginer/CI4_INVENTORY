@@ -4,7 +4,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <form action="<?= base_url('item/save') ?>" method="post">
+                <form action="<?= base_url('item/save') ?>" method="post" enctype="multipart/form-data">
                     <?= csrf_field(); ?>
                     <div class="form-group row">
                         <label for="nm_barang" class="col-sm-2 col-form-label">Nama Barang</label>
@@ -44,6 +44,16 @@
                             </select>
                             <div class="invalid-feedback">
                                 <?= $validation->getError('status'); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- gambar -->
+                    <div class="form-group row">
+                        <label for="gambar" class="col-sm-2 col-form-label">Gambar</label>
+                        <div class="col-sm-10">
+                            <input type="file" class="form-control-file <?= ($validation->hasError('gambar')) ? 'is-invalid' : ''; ?>" id="gambar" name="gambar">
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('gambar'); ?>
                             </div>
                         </div>
                     </div>

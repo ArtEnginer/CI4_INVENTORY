@@ -4,7 +4,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <form action="<?= base_url('item/update/' . $barang['id_barang']) ?>" method="post">
+                <form enctype="multipart/form-data"  action="<?= base_url('item/update/' . $barang['id_barang']) ?>" method="post">
                     <?= csrf_field(); ?>
                     <div class="form-group row">
                         <label for="nm_barang" class="col-sm-2 col-form-label">Nama Barang</label>
@@ -43,6 +43,20 @@
                             </select>
                             <div class="invalid-feedback">
                                 <?= $validation->getError('status'); ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- gambar -->
+                    <div class="form-group row">
+                        <label for="gambar" class="col-sm-2 col-form-label">Gambar</label>
+                        <div class="col-sm-10">
+                           <!-- tampilkan gambar yang sudah ada -->
+                            <img src="<?= base_url('assets/img/barang/' . $barang['gambar']) ?>" class="img-thumbnail" width="200">
+                            
+                            <input type="file" class="form-control-file <?= ($validation->hasError('gambar')) ? 'is-invalid' : ''; ?>" id="gambar" name="gambar">
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('gambar'); ?>
                             </div>
                         </div>
                     </div>
