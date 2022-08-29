@@ -20,7 +20,7 @@
                     <p class="col-sm-10 col-form-label"><?= $keluar['id_keluar'] ?></p>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Tanggal Masuk</label>
+                    <label class="col-sm-2 col-form-label">Tanggal Keluar</label>
                     <p class="col-sm-10 col-form-label"><?= tanggal($keluar['tanggal']) ?></p>
                 </div>
                 <div class="form-group row">

@@ -9,7 +9,7 @@ class KeluarModel extends Model
     protected $table = 'keluar';
     protected $primaryKey = 'id_keluar';
     protected $useTimestamps = true;
-    protected $allowedFields = ['id_keluar', 'tanggal', 'keterangan'];
+    protected $allowedFields = ['id_keluar', 'tanggal','sifat','nama', 'keterangan'];
 
     public function kodegen($tglKeluar)
     {

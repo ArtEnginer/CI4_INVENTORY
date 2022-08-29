@@ -27,7 +27,13 @@ class Keluar extends BaseController
     {
         $currentpage = $this->request->getVar('page_export') ? $this->request->getVar('page_export') : 1;
         $keyword = $this->request->getVar('keyword');
-        $keluar = $this->keluarModel->orderBy('tanggal', 'DESC');
+        $keluar = $this-> keluarModel->join('keluar_detail', 'keluar_detail.id_keluar = keluar.id_keluar');
+        // nama barang get nama barang
+        $keluar = $this-> keluarModel->join('barang', 'barang.id_barang = keluar_detail.id_barang');
+        
+
+       
+        // dd($keluar->paginate(25, 'export'));
         $data = [
             'title' => 'Data Barang Keluar',
             'keluar'  => $keluar->paginate(25, 'export'),
@@ -168,6 +174,8 @@ class Keluar extends BaseController
         $keluar = [
             'id_keluar' => $idKeluar,
             'tanggal' => $tglKeluar,
+            'sifat' => $this->request->getVar('sifat'),
+            'nama' => $this->request->getVar('nama'),
             'keterangan' =>  $this->request->getVar('keterangan')
         ];
 

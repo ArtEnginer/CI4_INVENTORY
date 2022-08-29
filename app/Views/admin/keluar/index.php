@@ -23,7 +23,13 @@
                         <tr>
                             <td style="width: 70px;">No.</td>
                             <td style="width: 100px;">ID</td>
+                            <!-- nama barang -->
+                            <td>Nama Barang</td>
                             <td style="width: 120px;">Tanggal Keluar</td>
+                            <!-- sifat -->
+                            <td style="width: 120px;">Sifat</td>
+                            <!-- nama -->
+                            <td style="width: 120px;">Nama</td>
                             <td>Keterangan</td>
                             <td style="width: 80px;">Action</td>
                         </tr>
@@ -34,7 +40,13 @@
                             <tr align="center">
                                 <td><?= $i++ ?></td>
                                 <td><?= $data['id_keluar'] ?></td>
+                                <!-- nama barang -->
+                                <td><?= $data['nm_barang'] ?></td>
                                 <td><?= tanggal($data['tanggal']) ?></td>
+                                <!-- sifat -->
+                                <td><?= $data['sifat'] ?></td>
+                                <!-- nama -->
+                                <td><?= $data['nama'] ?></td>
                                 <td align="left"><?= nl2br($data['keterangan']) ?></td>
                                 <td>
                                     <a href="<?= base_url('export/' . $data['id_keluar']) ?>" class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Detail</a>

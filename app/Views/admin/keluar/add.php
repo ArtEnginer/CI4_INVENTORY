@@ -84,6 +84,31 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- sifat -->
+                        <div class="form-group row">
+                            <label for="sifat" class="col-sm-2 col-form-label">Sifat</label>
+                            <div class="col-sm-10">
+                                <select class="form-control <?= ($validation->hasError('sifat')) ? 'is-invalid' : ''; ?>" name="sifat" id="sifat">
+                                    <option value="">-- Pilih Sifat --</option>
+                                    <option value="Pengembalian">Pengembalian</option>
+                                    <option value="Peminjaman">Peminjaman</option>
+
+                                </select>
+                                <div class="invalid-feedback">
+                                    <?= $validation->getError('sifat'); ?>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- nama -->
+                        <div class="form-group row">
+                            <label for="nama" class="col-sm-2 col-form-label">Nama</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" id="nama" name="nama" placeholder="Nama" value="<?= old('nama') ?>">
+                                <div class="invalid-feedback">
+                                    <?= $validation->getError('nama'); ?>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label for="keterangan" class="col-sm-2 col-form-label">Keterangan</label>
